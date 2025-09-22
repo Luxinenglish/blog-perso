@@ -22,27 +22,27 @@ export const NAV_LINKS: SocialLink[] = [
   },
   {
     href: '/about',
-    label: 'about',
+    label: 'CTF',
   },
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
   {
-    href: 'https://github.com/jktrn',
+    href: 'https://github.com/luxinenglish',
     label: 'GitHub',
   },
   {
-    href: 'https://twitter.com/enscry',
+    href: 'https://x.com/lux_in_french',
     label: 'Twitter',
   },
   {
-    href: 'mailto:jason@enscribe.dev',
+    href: 'mailto:j.brochard@pixelserver.fr',
     label: 'Email',
   },
   {
-    href: '/rss.xml',
-    label: 'RSS',
-  },
+    href: '/https://portfolio.pixelserver.fr',
+    label: 'Website',
+  }
 ]
 
 export const ICON_MAP: IconMap = {
