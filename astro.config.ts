@@ -75,6 +75,7 @@ export default defineConfig({
   server: {
     port: 1234,
     host: true,
+    allowedHosts: ['blog.aplosn.fr'], // autorise ton domaine
   },
   devToolbar: {
     enabled: false,
