@@ -7,4 +7,5 @@ website: 'https://portfolio.pixelserver.fr'
 twitter: 'https://x.com/Lux_in_french'
 github: 'https://github.com/luxinenglish'
 mail: 'j.brochard@pixelserver.fr'
+discord: 'https://discord.com/users/YOUR_DISCORD_ID'
 ---

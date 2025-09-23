@@ -1,0 +1,87 @@
+---
+title: "PowerShell Direct Elevation of Privilege Vulnerability"
+description: "CVE-2025-49734 allows local privilege escalation in PowerShell Direct due to insufficient endpoint restrictions."
+date: 2025-09-23
+tags: ["CVE", "PowerShell"]
+authors: ["Lux_"]
+image: "https://www.balbix.com/app/uploads/September-2025-Patch-Tuesday.png"
+---
+# Analysis of Vulnerability CVE-2025-49734
+
+The **CVE-2025-49734** vulnerability, identified by the [Microsoft Security Response Center](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-49734), involves a **privilege escalation** issue in **PowerShell Direct**, a component of Windows PowerShell. It allows an authorized attacker to elevate local privileges on the target system.
+
+---
+
+## 🔍 Technical Description
+
+This vulnerability arises from insufficient restriction of the communication channel to intended endpoints in Windows PowerShell. Some commands executed locally or via PowerShell Direct can bypass privilege restrictions.
+
+### Theoretical Example of Using PowerShell Direct
+
+# Connect to a VM via PowerShell Direct (requires initial privileges)
+```powershell
+$vmName = "VM-Target"
+Enter-PSSession -VMName $vmName -Credential (Get-Credential)
+
+# Standard PowerShell command
+Get-Process
+```
+
+
+In a vulnerable scenario, an attacker could exploit a poorly restricted endpoint to execute commands normally blocked for a limited-privilege user.
+
+### Example of Local Restriction Bypass
+
+```powershell
+# Theoretical: reading protected information via a misconfigured channel
+Invoke-Command -ScriptBlock {
+  Get-ItemProperty "HKLM:\SOFTWARE\ProtectedKey"
+}
+```
+
+In a properly secured environment, this command would fail for a non-privileged user.
+
+---
+
+## 📊 Impact and Severity
+
+- **CVSS v3.1 Score**: 7.0 (High)
+- **Attack Vector**: Local
+- **Attack Complexity**: High
+- **Privileges Required**: Low
+- **User Interaction**: None
+- **Impact**: High on Confidentiality, Integrity, and Availability
+
+---
+
+## 🛡️ Affected Products
+
+- **Windows 10 Version 1809**: 10.0.17763.0 – 10.0.17763.7792
+- **Windows Server 2019**: 10.0.17763.0 – 10.0.17763.7792
+- **Windows Server 2022**: 10.0.20348.0 – 10.0.20348.4171
+- **Windows 10 Version 21H2**: 10.0.19044.0 – 10.0.19044.6332
+- **Windows 11 Version 22H2**: 10.0.22621.0 – 10.0.22621.5909
+- **Windows 10 Version 22H2**: 10.0.19045.0 – 10.0.19045.6332
+- **Windows Server 2025**: 10.0.26100.0 – 10.0.26100.6584
+- **Windows 11 Version 22H3**: 10.0.22631.0 – 10.0.22631.5909
+- **Windows 11 Version 23H2**: 10.0.22631.0 – 10.0.22631.5909
+- **Windows Server 2022, 23H2 Edition**: 10.0.25398.0 – 10.0.25398.1849
+- **Windows 11 Version 24H2**: 10.0.26100.0 – 10.0.26100.6584
+- **PowerShell 7.4**: 7.4.0 – 7.4.12
+- **PowerShell 7.5**: 7.5.0 – 7.5.3
+
+---
+
+## ✅ Recommendations
+
+- **Update Windows and PowerShell**: apply the latest security patches.
+- **Limit access to PowerShell Direct**: allow only trusted administrators to run commands on VMs.
+- **Monitor PowerShell logs**: detect any suspicious activity on endpoints.
+
+---
+
+## 📚 References
+
+- [Microsoft Security Response Center (MSRC)](https://msrc.microsoft.com/update-guide/vulnerability/CVE-2025-49734)
+- [NVD - National Vulnerability Database](https://nvd.nist.gov/vuln/detail/CVE-2025-49734)
+- [CVE Details](https://www.cvedetails.com/cve/CVE-2025-49734/)

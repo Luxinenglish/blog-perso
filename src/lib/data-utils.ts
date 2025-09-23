@@ -11,6 +11,15 @@ export async function getAllPosts(): Promise<CollectionEntry<'blog'>[]> {
     .filter((post) => !post.data.draft && !isSubpost(post.id))
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
 }
+export async function getAllWriteUp(): Promise<any[]> {
+  const writeup = await getCollection('write_up' as any) as any[]
+  return writeup
+    .filter((writeup) => !writeup.data?.draft && !isSubpost(writeup.id))
+    .sort(
+      (a, b) =>
+        (b.data?.date?.valueOf?.() ?? 0) - (a.data?.date?.valueOf?.() ?? 0),
+    )
+}
 
 export async function getAllPostsAndSubposts(): Promise<
   CollectionEntry<'blog'>[]
@@ -29,6 +38,8 @@ export async function getAllProjects(): Promise<CollectionEntry<'projects'>[]> {
     return dateB - dateA
   })
 }
+
+
 
 export async function getAllTags(): Promise<Map<string, number>> {
   const posts = await getAllPosts()
@@ -118,6 +129,12 @@ export async function getRecentPosts(
 ): Promise<CollectionEntry<'blog'>[]> {
   const posts = await getAllPosts()
   return posts.slice(0, count)
+}
+export async function getRecentWriteUp(
+  count: number,
+): Promise<any[]> {
+  const writeup = await getAllWriteUp()
+  return writeup.slice(0, count)
 }
 
 export async function getSortedTags(): Promise<

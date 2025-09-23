@@ -1,0 +1,57 @@
+---
+title: "Comprendre l'attaque XSS stockée"
+description: "Explication détaillée du Cross-Site Scripting stocké, son fonctionnement et ses risques."
+date: 2025-09-22
+tags: ["XSS", "Web", "Sécurité"]
+authors: ["Lux_"]
+image: "https://media.licdn.com/dms/image/v2/D4D12AQH9YPiouVt2-w/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1737045223971?e=2147483647&v=beta&t=njLg1y15NvNrMq4F06_5Ckfwy6chXD5DRuyFEQBjUCI"
+---
+# Write-up - Note Pad Online
+
+## 📌 Description de l’épreuve
+Le challenge **Note Pad Online** présentait une application web permettant de gérer des notes via une API REST.
+L’objectif était de retrouver un flag caché dans une note accessible uniquement via son `note_id`.
+
+---
+
+## 🛠️ Façon de résoudre
+1. **Analyse initiale :**
+   En observant les requêtes, on remarque que l’application utilise un paramètre `note_id` dans l’URL :
+   <pre><code>http://10.10.201.131/note.php?note_id=&lt;ID&gt;</code></pre>
+   Cela laisse penser qu’on peut incrémenter les IDs pour accéder à d’autres notes.
+
+2. **Tentative de bruteforce automatisé :**
+   Pepitoo a tenté un script avec `curl` pour parcourir les IDs :
+   <pre><code># Création du cookie
+curl -u "noel:pass1234" -c cookies.txt -v "http://10.10.201.131/note.php"
+
+# Bruteforce sur les IDs
+for i in {0..1000}; do
+  curl -L -c cookies.txt "http://10.10.201.131/note.php?note_id=${i}"
+done</code></pre>
+
+   Cependant, ce test redirigeait toujours vers la page de login, malgré le cookie transmis.
+   En réalité, l’authentification reposait sur **BasicAuth**, ce qui nécessitait l’ajout d’un header `Authorization` encodé en Base64.
+
+3. **Découverte manuelle :**
+   Après quelques tests à la main directement dans le navigateur, Pepitoo a trouvé le bon `note_id` contenant le flag, sans avoir besoin de bruteforce.
+
+---
+
+## 📖 Exemple concret
+En s’authentifiant avec :
+<pre><code>noel:pass1234</code></pre>
+et en incrémentant manuellement `note_id`, le flag a pu être révélé dans le corps de la page.
+
+---
+
+## 🏆 Informations
+- **Nombre de points :** 15 pts
+- **Résolu par :** `Pepitoo`
+- **Date :** 17/03/2025
+- **Difficulté :** 🟢 Facile
+
+---
+
+## 🚩 Flag
+<pre><code>FLAG{exemple_de_flag}</code></pre>

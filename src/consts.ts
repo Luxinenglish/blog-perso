@@ -24,6 +24,10 @@ export const NAV_LINKS: SocialLink[] = [
     href: '/about',
     label: 'CTF',
   },
+  {
+    href: '/write_up',
+    label: 'Write up',
+  }
 ]
 
 export const SOCIAL_LINKS: SocialLink[] = [
@@ -52,4 +56,5 @@ export const ICON_MAP: IconMap = {
   Twitter: 'lucide:twitter',
   Email: 'lucide:mail',
   RSS: 'lucide:rss',
+  Discord: './assets/icons/discord.svg',
 }
