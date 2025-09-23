@@ -75,7 +75,7 @@ export default defineConfig({
   server: {
     port: 1234,
     host: true,
-    allowedHosts: ['blog.aplosn.fr', 'lux.pixelserver.fr', 'blog.pixelserver.fr'], // autorise ton domaine
+    allowedHosts: ['blog.aplosn.fr', 'lux.pixelserver.fr', 'blog.pixelserver.fr', 'task.pixelserver.fr'], // autorise ton domaine
     },
   devToolbar: {
     enabled: false,
