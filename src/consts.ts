@@ -44,7 +44,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
     label: 'Email',
   },
   {
-    href: '/https://portfolio.pixelserver.fr',
+    href: 'https://portfolio.pixelserver.fr',
     label: 'Website',
   }
 ]
